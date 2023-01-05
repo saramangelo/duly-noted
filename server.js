@@ -18,7 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 // essentially telling express that anything static comes from the public folder
 app.use(express.static('public'));
 
-// GET 
+// GET /notes ~ should return the notes.html file
+
+// GET * ~ should return the index.html file
+
+
 // GET request for API
 app.get('/api/notes', (req, res) => {
     // send message to client
@@ -44,7 +48,7 @@ if (noteTitle && noteText) {
     const newNote = {
         noteTitle,
         noteText,
-        id: // uuid() ~ need to either install npm uuid package or create file and export like in Day 29, example 19
+        id: // uuid() ~ installed npm uuid package 
     };
 
 // convert data to string so we can save it
