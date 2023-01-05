@@ -41,6 +41,7 @@ if (noteTitle && noteText) {
     const newNote = {
         noteTitle,
         noteText,
+        id: // uuid() ~ need to either install npm uuid package or create file and export like in Day 29, example 19
     };
 
 // convert data to string so we can save it
