@@ -10,7 +10,7 @@ const PORT = 3001;
 // initialize app to run express()
 const app = express();
 
-// middleware
+// initialize middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -18,16 +18,19 @@ app.use(express.urlencoded({ extended: true }));
 // essentially telling express that anything static comes from the public folder
 app.use(express.static('public'));
 
-// GET request
+// GET 
+// GET request for API
 app.get('/api/notes', (req, res) => {
     // send message to client
     res.json(`${req.method} request received to get notes`);
 
     // log our request to terminal
     console.info(`${req.method} request received to get notes`);
+
+    // need to read db.json file and return all saved notes as JSON
 });
 
-// POST request
+// POST request for API
 app.post('/api/notes', (req, res) => {
     // log that POST request was received
 console.info(`${req.method} request received to add notes`);
