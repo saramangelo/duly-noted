@@ -2,7 +2,8 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { addAbortSignal } = require('stream');
+const { addAbortSignal } = require('stream'); // where did this come from??
+const uuid = require('uniqid'); // is this correct?
 
 // initialize port
 const PORT = 3001;
@@ -19,8 +20,24 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // GET /notes ~ should return the notes.html file
+app.get('/notes', (req, res) => {
+    // send message to client
+    res.json(`${req.method} request received to get notes html file`); // ?? this feels wrong
+    // send file
+    res.sendFile('notes.html'); // is this named correctly?
+    // log request to terminal
+    console.info(`${req.method} request received to get notes html file`);
+})
 
 // GET * ~ should return the index.html file
+app.get('*', (req, res) => {
+    // send message to client
+    res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
+    // send file
+    res.sendFile('index.html'); // is this named correctly?
+    // log request to terminal
+    console.info(`${req.method} request received to get index html file`);
+})
 
 
 // GET request for API
@@ -48,7 +65,7 @@ if (noteTitle && noteText) {
     const newNote = {
         noteTitle,
         noteText,
-        id: // uuid() ~ installed npm uuid package 
+        id: uuid() // ~ installed npm uuid package, is this all I need?
     };
 
 // convert data to string so we can save it
@@ -84,13 +101,13 @@ res.status(201).json(response);
 });
 
 // DELETE request? (bonus) ~ unsure about path..should it be just '/' instead?
-app.delete(`/api/notes${id}`, (req, res) => {
+app.delete(`/api/notes`, (req, res) => {
 res.send('DELETE request called');
-})
+});
 
 // at the bottom - listener ~ app.listen(PORT, () =>)
 app.listen(PORT, () =>
-console.log(`App is listening on port ${PORT}!`)
+console.log(`App is listening on http://localhost:${PORT}`)
 );
 
 
