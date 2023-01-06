@@ -6,7 +6,7 @@ const uuid = require('uniqid'); // is this correct?
 const util = require('util');
 const readFileAsync = util.promisify(fs.readFile);
 // initialize port
-const PORT = 3001;
+const PORT = process.env.port || 3001;
 
 // initialize app to run express()
 const app = express();
