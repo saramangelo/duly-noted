@@ -109,15 +109,15 @@ app.delete(`/api/notes`, (req, res) => {
 res.send('DELETE request called');
 });
 
-// GET * (wildcard route) ~ should return the index.html file
-// app.get('*', (req, res) => {
-//     // send message to client
-//     // res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
-//     // send file
-//     res.sendFile(path.join(__dirname, '/public/index.html'))
-//     // log request to terminal
-//     console.info(`${req.method} request received to get index html file`);
-// })
+GET * (wildcard route) ~ should return the index.html file
+app.get('*', (req, res) => {
+    // send message to client
+    // res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
+    // send file
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+    // log request to terminal
+    console.info(`${req.method} request received to get index html file`);
+})
 
 // at the bottom - listener ~ app.listen(PORT, () =>)
 app.listen(PORT, () =>
