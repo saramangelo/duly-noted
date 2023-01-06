@@ -2,9 +2,9 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { addAbortSignal } = require('stream'); // where did this come from??
 const uuid = require('uniqid'); // is this correct?
-
+const util = require('util');
+const readFileAsync = util.promisify(fs.readFile);
 // initialize port
 const PORT = 3001;
 
@@ -15,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 // set static folder
 // essentially telling express that anything static comes from the public folder
 app.use(express.static('public'));
@@ -22,34 +23,44 @@ app.use(express.static('public'));
 // GET /notes ~ should return the notes.html file
 app.get('/notes', (req, res) => {
     // send message to client
-    res.json(`${req.method} request received to get notes html file`); // ?? this feels wrong
+    // res.json(`${req.method} request received to get notes html file`); 
     // send file
-    res.sendFile('notes.html'); // is this named correctly?
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
     // log request to terminal
     console.info(`${req.method} request received to get notes html file`);
 })
 
 // GET * ~ should return the index.html file
-app.get('*', (req, res) => {
-    // send message to client
-    res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
-    // send file
-    res.sendFile('index.html'); // is this named correctly?
-    // log request to terminal
-    console.info(`${req.method} request received to get index html file`);
-})
+// app.get('*', (req, res) => {
+//     // send message to client
+//     // res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
+//     // send file
+//     res.sendFile(path.join(__dirname, '/public/index.html'))
+//     // log request to terminal
+//     console.info(`${req.method} request received to get index html file`);
+// })
 
 
 // GET request for API
 app.get('/api/notes', (req, res) => {
+    console.log("here");
     // send message to client
-    res.json(`${req.method} request received to get notes`);
+    // res.json(`${req.method} request received to get notes`);
 
     // log our request to terminal
     console.info(`${req.method} request received to get notes`);
 
     // need to read db.json file and return all saved notes as JSON
-});
+    readFileAsync(`db/db.json`, "utf8").then((data) => {
+
+        // convert string to JSON object
+        let noteArr = JSON.parse(data);
+        console.log(noteArr)
+        res.json(noteArr);
+
+    });
+})
+
 
 // POST request for API
 app.post('/api/notes', (req, res) => {
@@ -74,7 +85,7 @@ const noteString = JSON.stringify(newNote);
 fs.readFile(`./db/db.json`, "utf-8", (err,data) => {
 
     // convert string to JSON object
-    let noteArr = JSON.parse(noteString);
+    let noteArr = JSON.parse(data);
     // add new note to array
     noteArr.push(newNote);
 
