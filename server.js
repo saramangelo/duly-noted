@@ -16,8 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-// set static folder
-// essentially telling express that anything static comes from the public folder
+// set static folder (essentially telling express that anything static comes from the public folder)
 app.use(express.static('public'));
 
 // GET /notes ~ should return the notes.html file
@@ -30,15 +29,7 @@ app.get('/notes', (req, res) => {
     console.info(`${req.method} request received to get notes html file`);
 })
 
-// GET * ~ should return the index.html file
-// app.get('*', (req, res) => {
-//     // send message to client
-//     // res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
-//     // send file
-//     res.sendFile(path.join(__dirname, '/public/index.html'))
-//     // log request to terminal
-//     console.info(`${req.method} request received to get index html file`);
-// })
+
 
 
 // GET request for API
@@ -66,7 +57,7 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     // log that POST request was received
 console.info(`${req.method} request received to add notes`);
-
+console.log(req.body);
 // destructure assignment for items in req.body
 const { noteTitle, noteText } = req.body;
 
@@ -117,6 +108,16 @@ res.status(201).json(response);
 app.delete(`/api/notes`, (req, res) => {
 res.send('DELETE request called');
 });
+
+// GET * (wildcard route) ~ should return the index.html file
+// app.get('*', (req, res) => {
+//     // send message to client
+//     // res.json(`${req.method} request received to get index html file`); // ?? this feels wrong
+//     // send file
+//     res.sendFile(path.join(__dirname, '/public/index.html'))
+//     // log request to terminal
+//     console.info(`${req.method} request received to get index html file`);
+// })
 
 // at the bottom - listener ~ app.listen(PORT, () =>)
 app.listen(PORT, () =>
