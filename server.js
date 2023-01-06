@@ -79,10 +79,11 @@ if (noteTitle && noteText) {
         id: uuid() // ~ installed npm uuid package, is this all I need?
     };
 
-// convert data to string so we can save it
-const noteString = JSON.stringify(newNote);
-
-fs.readFile(`./db/db.json`, "utf-8", (err,data) => {
+// obtain existing notes
+fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
 
     // convert string to JSON object
     let noteArr = JSON.parse(data);
@@ -97,7 +98,8 @@ fs.readFile(`./db/db.json`, "utf-8", (err,data) => {
         `Note for ${newNote.noteTitle} has been written to JSON file`
     )
     );
-})
+    }
+});
 
 const response = {
     status: 'success',
