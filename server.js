@@ -62,7 +62,7 @@ app.post("/api/notes", (req, res) => {
     const newNote = {
       title,
       text,
-      id: uuid(), // ~ installed npm uuid package, is this all I need?
+      id: uuid(), // ~ installed npm uuid package
     };
     console.log(newNote);
     // obtain existing notes
@@ -99,10 +99,10 @@ app.post("/api/notes", (req, res) => {
   }
 });
 
-// DELETE request? (bonus) ~ unsure about path..should it be just '/' instead? ~ need to fix this!!
+// DELETE request? (bonus)
 app.delete(`/api/notes/:id`, (req, res) => {
     // add logic to figure out how to remove from the array where the notes id matches the value of that parameter ~ filter functional loop
-    //
+    // if (notes.id === parseInt(req.params.id))
   res.send("DELETE request called");
 });
 
