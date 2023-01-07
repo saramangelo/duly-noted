@@ -1,10 +1,8 @@
 // require libraries
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
-const uuid = require("uniqid"); // is this correct?
-const util = require("util");
-const readFileAsync = util.promisify(fs.readFile);
+const api = require('./routes/index.js');
+
 // initialize port
 const PORT = process.env.port || 3001;
 
@@ -14,6 +12,7 @@ const app = express();
 // initialize middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/api', api);
 
 // set static folder (essentially telling express that anything static comes from the public folder)
 app.use(express.static("public"));
@@ -28,76 +27,7 @@ app.get("/notes", (req, res) => {
   console.info(`${req.method} request received to get notes html file`);
 });
 
-// GET request for API
-app.get("/api/notes", (req, res) => {
-  console.log("here");
-  // send message to client
-  // res.json(`${req.method} request received to get notes`);
 
-  // log our request to terminal
-  console.info(`${req.method} request received to get notes`);
-
-  // need to read db.json file and return all saved notes as JSON
-  readFileAsync(`db/db.json`, "utf8").then((data) => {
-    // convert string to JSON object
-    let noteArr = JSON.parse(data);
-    console.log(noteArr);
-    res.json(noteArr);
-  });
-});
-
-// POST request for API
-app.post("/api/notes", (req, res) => {
-    console.log("you made it");
-  // log that POST request was received
-  console.info(`${req.method} request received to add notes`);
-  console.log(req.body);
-  // destructure assignment for items in req.body
-  const { title, text } = req.body;
-
-  // if both properties are present
-  if (title && text) {
-    console.log("if statement");
-    // variable for object we want to save
-    const newNote = {
-      title,
-      text,
-      id: uuid(), // ~ installed npm uuid package
-    };
-    console.log(newNote);
-    // obtain existing notes
-    fs.readFile("db/db.json", "utf8", (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("data:", data);
-        // convert string to JSON object
-        let noteArr = JSON.parse(data);
-        // add new note to array
-        noteArr.push(newNote);
-        console.log("note array:", noteArr);
-        // (stringify array) write string to a file
-        fs.writeFile(`db/db.json`, JSON.stringify(noteArr, null, "\t"), (err) =>
-          err
-            ? console.error(err)
-            : console.log(
-                `Note for ${newNote.noteTitle} has been written to JSON file`
-              )
-        );
-      }
-    });
-
-    const response = {
-      status: "success",
-      body: newNote,
-    };
-
-    console.log(response);
-    res.status(201).json(response);
-  } else {
-    res.status(500).json("Error in posting note");
-  }
-});
 
 // DELETE request? (bonus)
 app.delete(`/api/notes/:id`, (req, res) => {
