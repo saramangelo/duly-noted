@@ -27,40 +27,6 @@ app.get("/notes", (req, res) => {
   console.info(`${req.method} request received to get notes html file`);
 });
 
-
-
-// DELETE request? (bonus)
-app.delete(`/notes/:id`, (req, res) => {
-    // add logic to figure out how to remove from the array where the notes id matches the value of that parameter ~ filter functional loop
-
-    // const deletedArr = noteListItems.filter(function(data) { 
-    //   if (notes.id === parseInt(req.params.id)) { 
-    //     handleNoteDelete(deletedArr);
-    //   } 
-    // });
-
-    // use something like below??
-
-//     // GET route that returns any specific term
-// app.get('/api/term/:term', (req, res) => {
-//   const requestedTerm = req.params.term.toLowerCase();
-
-//   // Iterate through the terms name to check if it matches `req.params.term`
-//   if (requestedTerm) {
-//     for (let i = 0; i < termData.length; i++) {
-//       if (requestedTerm === termData[i].term.toLowerCase()) {
-//         return res.json(termData[i]);
-//       }
-//     }
-//   }
-
-//   // Return a message if the term doesn't exist in our DB
-//   return res.json('No term found');
-// });
-
-  res.send("DELETE request called");
-});
-
 // GET * (wildcard route) ~ should return the index.html file
 app.get('*', (req, res) => {
     // send message to client

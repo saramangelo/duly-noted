@@ -3,6 +3,7 @@ const fs = require("fs");
 const util = require("util");
 const readFileAsync = util.promisify(fs.readFile);
 const uuid = require("uniqid");
+const { response } = require('.');
 
 
 // GET request for API (/api/notes)
@@ -22,6 +23,7 @@ notes.get("/", (req, res) => {
       res.json(noteArr);
     });
   });
+
   
   // POST request for API (/api/notes)
  notes.post("/", (req, res) => {
@@ -75,5 +77,37 @@ notes.get("/", (req, res) => {
       res.status(500).json("Error in posting note");
     }
   });
+
+  // *BONUS*
+  // delete clicked note
+ notes.delete(`/:id`, (req, res) => {
+    // add logic to figure out how to remove from the array where the notes id matches the value of that parameter ~ filter functional loop
+    fs.readFile("db/db.json", "utf8", (err, data) => {
+      
+      if (err) {
+        console.error(err);
+      } else {
+        // convert string to JSON object
+        let noteArr = JSON.parse(data);
+        // note = noteArr[i] (each individual item in array)
+        const deletedArr = noteArr.filter(function(note) { 
+          if (note.id != req.params.id) { 
+            console.log("message")
+        return note;
+    
+          } 
+        });
+ 
+
+        // (stringify array) write string to a file
+        fs.writeFile(`db/db.json`, JSON.stringify(deletedArr, null, "\t"), (err) =>
+          err
+            ? console.error(err)
+            : res.json(deletedArr)
+        );
+      }
+    });
+
+  })
 
   module.exports = notes;
