@@ -32,7 +32,13 @@ app.get("/notes", (req, res) => {
 // DELETE request? (bonus)
 app.delete(`/api/notes/:id`, (req, res) => {
     // add logic to figure out how to remove from the array where the notes id matches the value of that parameter ~ filter functional loop
-    // if (notes.id === parseInt(req.params.id))
+
+    // const deletedArr = notesArr.filter(function(data) { 
+    //   if (notes.id === parseInt(req.params.id)) { 
+    //     handleNoteDelete(deletedArr);
+    //   } 
+    // });
+
   res.send("DELETE request called");
 });
 
