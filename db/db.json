@@ -1,1 +1,17 @@
-[]
+[
+	{
+		"title": "First note",
+		"text": "This is my first note",
+		"id": "6nla7bq7blcnwfumm"
+	},
+	{
+		"title": "Second note",
+		"text": "This is my second note",
+		"id": "6nla7bq7blcnwgra2"
+	},
+	{
+		"title": "Third note",
+		"text": "This is my third note",
+		"id": "6nla7bq7blcnwgyaa"
+	}
+]
