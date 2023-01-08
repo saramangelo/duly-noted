@@ -4,6 +4,7 @@
 ## Description
 Duly-noted is a note-taking application that can be used to write and save notes using an Express.js back end and saves and retrieves note data from a JSON file. Front end for this application was provided and the developer built the back end, connected the two, and deployed the full application to Heroku.
 
+![duly_noted_ss.png](./public/assets/images/duly_noted_ss.png)
   
 ## Table of Contents (Optional)
     
