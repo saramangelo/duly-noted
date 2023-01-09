@@ -18,7 +18,7 @@ Duly-noted is a note-taking application that can be used to write and save notes
 - [Questions](#questions)
   
 ## Installation
-Enter URL into browser.
+Clone repository from Github, run npm i.
   
   
 ## Usage
